@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.*;
 
 public class UploadImagesToS3 {
@@ -64,8 +63,14 @@ public class UploadImagesToS3 {
 
             try {
                 // Step 1: Download image to local file
-                new URL(imgUrl).openStream().transferTo(
-                        new FileOutputStream(localFile));
+                try (InputStream in = new URL(imgUrl).openStream();
+                     FileOutputStream out = new FileOutputStream(localFile)) {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = in.read(buffer)) != -1) {
+                        out.write(buffer, 0, bytesRead);
+                    }
+                }
 
                 // Step 2: Upload local file to S3
                 s3.putObject(BUCKET_NAME, s3Key, localFile);
