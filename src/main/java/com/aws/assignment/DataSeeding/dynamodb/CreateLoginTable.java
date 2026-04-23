@@ -1,6 +1,4 @@
-package com.amazonaws.a2.dynamodb;
-
-import java.util.Arrays;
+package com.aws.assignment.DataSeeding.dynamodb;
 
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;

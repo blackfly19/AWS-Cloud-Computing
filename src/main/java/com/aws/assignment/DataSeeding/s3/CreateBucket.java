@@ -1,4 +1,4 @@
-package com.amazonaws.a2.s3;
+package com.aws.assignment.DataSeeding.s3;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;

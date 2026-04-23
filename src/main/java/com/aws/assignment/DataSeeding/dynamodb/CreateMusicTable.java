@@ -1,4 +1,4 @@
-package com.amazonaws.a2.dynamodb;
+package com.aws.assignment.DataSeeding.dynamodb;
 
 import java.util.Arrays;
 
