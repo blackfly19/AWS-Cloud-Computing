@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost";
+const API_BASE_URL = "http://localhost:8080";
 
 const loginForm = document.getElementById("loginForm");
 const emailInput = document.getElementById("email");
