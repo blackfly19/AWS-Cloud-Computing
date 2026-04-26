@@ -34,7 +34,7 @@ public class SubscriptionTable {
                     .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
 
             dynamoDB.createTable(request);
-            client.createTable(request).waitForActive();
+            client.getTable(tableName).waitForActive();
             System.out.println("Success. Table created.");
 
         } catch (ResourceInUseException e){

@@ -23,7 +23,7 @@ public class MusicTable {
     private final AmazonDynamoDB dynamoDB;
     private final DynamoDB client;
 
-    @Value("${aws.seed-data:false")
+    @Value("${aws.seed-data:false}")
     private boolean seedData;
 
     public MusicTable(AmazonDynamoDB dynamoDB, DynamoDB client) {
