@@ -10,6 +10,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.aws.assignment.Config.DynamoDBConfig;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,13 +21,10 @@ public class LoadSongsToDynamoDB {
 
     public static void main(String[] args) throws Exception {
 
-        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
-                .withRegion(Regions.US_EAST_1)
-                .withCredentials(new ProfileCredentialsProvider("default"))
-                .build();
+        AmazonDynamoDB client = DynamoDBConfig.amazonDynamoDB();
 
         DynamoDB dynamoDB = new DynamoDB(client);
-        Table table = dynamoDB.getTable("Music");
+        Table table = dynamoDB.getTable("music");
 
         JsonParser parser = new JsonFactory().createParser(new File("2026a2_songs.json"));
         JsonNode rootNode = new ObjectMapper().readTree(parser);

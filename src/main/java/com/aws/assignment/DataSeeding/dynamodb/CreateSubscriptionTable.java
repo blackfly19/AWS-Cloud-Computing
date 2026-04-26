@@ -11,19 +11,17 @@ import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
+import com.aws.assignment.Config.DynamoDBConfig;
 
 public class CreateSubscriptionTable {
 
     public static void main(String[] args) throws Exception {
 
-        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
-                .withRegion(Regions.US_EAST_1)
-                .withCredentials(new ProfileCredentialsProvider("default"))
-                .build();
+        AmazonDynamoDB client = DynamoDBConfig.amazonDynamoDB();
 
         DynamoDB dynamoDB = new DynamoDB(client);
 
-        String tableName = "Subscription";
+        String tableName = "subscription";
 
         try {
             System.out.println("Attempting to create table; please wait...");

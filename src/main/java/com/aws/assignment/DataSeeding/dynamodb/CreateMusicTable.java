@@ -17,20 +17,18 @@ import com.amazonaws.services.dynamodbv2.model.Projection;
 import com.amazonaws.services.dynamodbv2.model.ProjectionType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
+import com.aws.assignment.Config.DynamoDBConfig;
 
 
 public class CreateMusicTable {
 
     public static void main(String[] args) throws Exception {
 
-        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
-                .withRegion(Regions.US_EAST_1)
-                .withCredentials(new ProfileCredentialsProvider("default"))
-                .build();
+        AmazonDynamoDB client = DynamoDBConfig.amazonDynamoDB();
 
         DynamoDB dynamoDB = new DynamoDB(client);
 
-        String tableName = "Music";
+        String tableName = "music";
 
         try {
             System.out.println("Attempting to create table; please wait...");

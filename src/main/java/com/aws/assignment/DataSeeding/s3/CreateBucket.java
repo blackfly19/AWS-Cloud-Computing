@@ -8,19 +8,25 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.GetBucketLocationRequest;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
 public class CreateBucket {
 
+    @Value("${aws.region}")
+    private static String region;
+
+    @Value("${aws.bucket-name}")
+    private static String bucketName;
+
     public static void main(String[] args) throws IOException {
-        Regions clientRegion = Regions.US_EAST_1;
-        String bucketName = "a2-s4088068";
+
 
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                     .withCredentials(new ProfileCredentialsProvider())
-                    .withRegion(clientRegion)
+                    .withRegion(region)
                     .build();
 
             if (!s3Client.doesBucketExistV2(bucketName)) {

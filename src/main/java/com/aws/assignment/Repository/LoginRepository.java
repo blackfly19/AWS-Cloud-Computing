@@ -14,7 +14,7 @@ import java.util.Map;
 @Repository
 public class LoginRepository {
 
-    private static final String TABLE_NAME = "Login";
+    private static final String TABLE_NAME = "login";
 
     private final AmazonDynamoDB amazonDynamoDB;
 

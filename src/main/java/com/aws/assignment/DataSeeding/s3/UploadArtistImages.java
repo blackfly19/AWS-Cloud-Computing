@@ -21,20 +21,28 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.beans.factory.annotation.Value;
 
 public class UploadArtistImages {
 
+    @Value("${aws.region}")
+    private static String REGION;
+
+    @Value("${aws.bucket-name}")
+    private static String BUCKET_NAME;
+
+    private static final String  JSON_FILE   = "2026a2_songs.json";
+    private static final String  S3_PREFIX   = "artists/";
+
     public static void main(String[] args) throws Exception {
 
-        String bucketName = "a2-s4088068";
-        String jsonFileName = "2026a2_songs.json";
 
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.US_EAST_1)
+                .withRegion(REGION)
                 .withCredentials(new ProfileCredentialsProvider("default"))
                 .build();
 
-        JsonParser parser = new JsonFactory().createParser(new File(jsonFileName));
+        JsonParser parser = new JsonFactory().createParser(new File(JSON_FILE));
         JsonNode rootNode = new ObjectMapper().readTree(parser);
         JsonNode songsNode = rootNode.path("songs");
 
@@ -65,7 +73,7 @@ public class UploadArtistImages {
                 continue;
             }
 
-            String s3Key = "artists/" + makeSafeFileName(artist) + getFileExtension(imageUrl);
+            String s3Key = S3_PREFIX + makeSafeFileName(artist) + getFileExtension(imageUrl);
 
             File tempFile = null;
 
@@ -76,14 +84,14 @@ public class UploadArtistImages {
                 metadata.setContentType(guessContentType(imageUrl));
                 metadata.setContentLength(tempFile.length());
 
-                PutObjectRequest request = new PutObjectRequest(bucketName, s3Key, tempFile);
+                PutObjectRequest request = new PutObjectRequest(BUCKET_NAME, s3Key, tempFile);
                 request.setMetadata(metadata);
 
                 s3Client.putObject(request);
 
                 processedImageUrls.add(imageUrl);
 
-                System.out.println("Uploaded: " + artist + " -> s3://" + bucketName + "/" + s3Key);
+                System.out.println("Uploaded: " + artist + " -> s3://" + BUCKET_NAME + "/" + s3Key);
 
             } catch (Exception e) {
                 System.err.println("Failed to upload image for artist: " + artist);
