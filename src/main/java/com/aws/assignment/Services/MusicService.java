@@ -13,7 +13,6 @@ public class MusicService {
 
     private final MusicRepository musicRepository;
 
-    @Autowired
     public MusicService(MusicRepository musicRepository) {
         this.musicRepository = musicRepository;
     }

@@ -18,7 +18,6 @@ public class LoginRepository {
 
     private final AmazonDynamoDB amazonDynamoDB;
 
-    @Autowired
     public LoginRepository(AmazonDynamoDB amazonDynamoDB) {
         this.amazonDynamoDB = amazonDynamoDB;
     }

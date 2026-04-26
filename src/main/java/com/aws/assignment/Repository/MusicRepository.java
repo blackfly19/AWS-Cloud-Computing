@@ -10,7 +10,6 @@ public class MusicRepository {
 
     private final AmazonDynamoDB dynamoDB;
 
-    @Autowired
     public MusicRepository(AmazonDynamoDB dynamoDB) {
         this.dynamoDB = dynamoDB;
     }
